@@ -1,0 +1,11 @@
+<div class="card" style="width: 18rem;">
+<div class="small-recipe">
+  <img style="width: 100px;" class="card-img-top" [src]="recipein.picture" alt="{{ recipein.recipeName }}">
+  <div class="card-body">
+  <h2 class="card-title">המתכון: {{ recipein.recipeName }}</h2>
+  <p class="card-text">אופן ההכנה:<br> {{recipein.preparationMethod[0]}}</p>
+    <p >זמן ההכנה: {{ recipein.preparationTime }} שעות</p>
+    </div>
+  </div>
+  <button (click)="showDetails()">כל המתכון</button>
+</div>

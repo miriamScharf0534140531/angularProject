@@ -1,0 +1,17 @@
+<form [formGroup]="this.loginForm">
+        <input placeholder="שם משתמש" type="text" formControlName=name>
+        <ng-container *ngIf="this.loginForm.controls['name'].errors as nameError">
+            <p *ngIf="nameError['required']">this field is must!</p>
+            <div>name error</div>
+            <!-- <p appHightLight *ngIf="this.loginForm.controls['name'].errors['required']">this field is must!</p> -->
+        </ng-container>
+    <br>
+    <input  placeholder="סיסמא" type="password" formControlName="password">
+    <ng-container *ngIf="this.loginForm.controls['password'].errors as passwordError">
+        <p *ngIf="passwordError['required']">this field is must!</p>
+        <p *ngIf="passwordError['minLength']">this field is must be 4 digit</p>
+        <!-- לא עובד לי -->
+    </ng-container>
+    <br>
+    <button (click)="login()" [disabled]="!this.loginForm.valid">login</button>
+</form>

@@ -1,0 +1,57 @@
+<form [formGroup]="this.addRecipeForm">
+    <input placeholder="שם משתמש" type="text" formControlName=recipName>
+    <ng-container *ngIf="this.addRecipeForm.controls['recipName'].errors as nameError">
+        <p *ngIf="nameError['required']">this field is must!</p>
+    </ng-container>
+    <br>
+    <input placeholder="זמן הכנה" type="number" formControlName="preparationTime">
+    <ng-container *ngIf="this.addRecipeForm.controls['preparationTime'].errors as preparationTimeError">
+        <p *ngIf="preparationTimeError['required']">this field is must!</p>
+    </ng-container>
+    <br>
+    <label for="selectedCategory">קטגוריה</label>
+    <select id="category" formControlName="categoryId">
+        <option *ngFor="let category of categoryList" [value]="category.Id">
+            {{ category }}
+        </option>
+    </select>
+    <br>
+    <br>
+    <input placeholder="רמת קושי" type="number" formControlName="levelDifficulty">
+    <ng-container *ngIf="this.addRecipeForm.controls['levelDifficulty'].errors as levelDifficultyTimeError">
+        <p *ngIf="levelDifficultyTimeError['required']">this field is must!</p>
+    </ng-container>
+    <br>
+    <!-- <input placeholder="תאריך הוספה" type="date" formControlName="dateAdded">
+    <ng-container *ngIf="this.addRecipeForm.controls['dateAdded'].errors as dateAddedTimeError">
+        <p *ngIf="dateAddedTimeError['required']">this field is must!</p>
+    </ng-container>
+    <br> -->
+    <div>רכיבים</div>
+    <div formArrayName="listComponent">
+        <div *ngFor="let listComponent of listComponentArray.controls; let i = index">
+            <input type="text" (input)="addProduct()" [formControlName]="i"
+                *ngIf="i === listComponentArray.length - 1 || listComponentArray.at(i).value !== ''" />
+        </div>
+        <button type="button" (click)="removeEmptyproducts()">finish</button>
+    </div>
+    <br>
+    <div>הוראות הכנה</div>
+    <div formArrayName="preparationMethod">
+        <div *ngFor="let Instruction of preparationMethodArray.controls; let i = index">
+            <input type="text" [formControlName]="i" (input)="addPreparationStep()"
+                *ngIf="i === preparationMethodArray.length - 1 || preparationMethodArray.at(i).value !== ''" />
+        </div>
+        <button type="button" (click)="removeEmptyPreparationSteps()">finish</button>
+    </div>
+    <input placeholder="קוד משתמש" type="number" formControlName="userId">
+    <ng-container *ngIf="this.addRecipeForm.controls['userId'].errors as userIdError">
+        <p *ngIf="userIdError['required']">this field is must!</p>
+    </ng-container>
+    <br>
+    <input placeholder="כתובת תמונה" type="text" formControlName="picture">
+    <ng-container *ngIf="this.addRecipeForm.controls['picture'].errors as pictureError">
+        <p *ngIf="pictureError['required']">this field is must!</p>
+    </ng-container>
+    <button (click)="add()" [disabled]="this.addRecipeForm.invalid">login</button>
+</form>

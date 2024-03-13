@@ -1,0 +1,26 @@
+<div class="card" style="width: 18rem;">
+    <div class="small-recipe">
+      <img style="width: 100px;" class="card-img-top" [src]="recipe.picture" alt="{{ recipe.recipeName }}">
+      <div class="card-body">
+      <h2 class="card-title">המתכון: {{ recipe.recipeName }}</h2>
+        <p >זמן ההכנה: {{ recipe.preparationTime }} שעות</p>
+        <p>{{recipe.preparationTime | time}}</p>
+        <p>דרגת קושי: {{recipe.levelDifficulty}}</p>
+        <ng-container *ngFor="let x of countArray(recipe.levelDifficulty)">
+            <span>*</span>
+          </ng-container>
+        <p>תאריך עדכון: {{recipe.dateAdded}}</p>
+        <h3>רכיבים:</h3>
+        <ng-container *ngFor="let com of recipe.listComponent">
+            <div>{{com}}</div>
+          </ng-container>
+        <h3>הוראות הכנה:</h3>
+          <ng-container *ngFor="let pre of recipe.preparationMethod">
+            <div>{{pre}}</div>
+          </ng-container>
+        </div>
+        <div style="font-size: 30px;">good luck!</div>
+      </div>
+      <!-- פה לשנות -->
+      <!-- <button *ngIf="recipe.userId== this.currentUser" (click)="updateRecipe()"></button> -->
+    </div>

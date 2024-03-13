@@ -1,0 +1,42 @@
+<!-- id: number;
+name: string;
+address:string;
+mail:string;
+password:string; -->
+
+<form [formGroup]="this.registerForm">
+    <input type="text" placeholder="שם משתמש" formControlName="name">
+    <ng-container *ngIf="this.registerForm.controls['name'].errors as nameError">
+        <div *ngIf="nameError['required']" style="color: red;">This field is required</div>
+    </ng-container>
+    <br>
+    <input type="text" placeholder="תעודת זהות" formControlName="id">
+    <ng-container *ngIf="this.registerForm.controls['id'].errors as idError">
+        <div style="color: red;">the field have to be with 9 digits</div>
+    </ng-container>
+    <br>
+    <input type='password' placeholder="סיסמא" formControlName="password">
+    <ng-container *ngIf="registerForm.controls['password'].errors as passwordError">
+        <div *ngIf="passwordError['required']" style="color: red;">the field is required</div>
+        <div *ngIf="passwordError['minLength']" style="color: red;">You must enter at least 4 characters</div>
+    </ng-container>
+    <br>
+    <input matInput type="text" placeholder="address" formControlName="address">
+    <ng-container *ngIf="registerForm.controls['address'].errors as addressError ">
+        <div *ngIf="addressError['required']" style="color: red;"> This field is required </div>
+    </ng-container>
+    <br>
+    <input matInput type="email" placeholder="מייל" formControlName="mail">
+    <ng-container *ngIf="registerForm.controls['mail'].errors as mailError">
+        <div *ngIf="mailError['email']"
+            style="color: red;">
+            The email address is invalid
+        </div>
+        <div *ngIf="mailError['required']" style="color: red;">
+            This field is required
+        </div>
+
+    </ng-container>
+    <br>
+    <button type="submit" (click)="registerLogin()" [disabled]="registerForm.invalid"> Login </button>
+</form>
