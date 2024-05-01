@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { UsersService } from '../user-service/users.service';
 import { User } from '../../../classes/user';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -19,6 +20,7 @@ export class LoginComponent implements OnInit {
       "password": new FormControl(this.userLogin.password, [Validators.required, Validators.minLength(4)])
     })
   }
+ 
 
   login() {
     this.userLogin = this.loginForm.value;
@@ -31,6 +33,7 @@ export class LoginComponent implements OnInit {
           alert("invalid password!!")
         else {
             console.log("good!!!");
+            this.router.navigate(['/recipe'])
         }}
         else{
           // localStorage.setItem("user", JSON.stringify(this.userLogin))

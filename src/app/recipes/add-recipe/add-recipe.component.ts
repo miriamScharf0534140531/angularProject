@@ -4,6 +4,8 @@ import { CategoryService } from '../category.service';
 import { Recipe } from '../../../classes/recipe';
 import { RecipesService } from '../recipes.service';
 import { Router } from '@angular/router';
+import { min } from 'rxjs';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-add-recipe',
@@ -32,10 +34,10 @@ export class AddRecipeComponent implements OnInit {
       "categoryId": new FormControl("1"),//
       "listComponent": this._formBuilder.array([this._formBuilder.control('')]),//
       "preparationMethod": this._formBuilder.array([this._formBuilder.control('')]),//
-      "levelDifficulty": new FormControl("", [Validators.required]),//להוסיף בדיקת תקינות שזה בין 1-5
+      "levelDifficulty": new FormControl("", [Validators.required,Validators.min(1),Validators.max(5)]),//להוסיף בדיקת תקינות שזה בין 1-5
       // "dateAdded": new FormControl(this.recipeEdit.dateAdded, [Validators.required]),
       "userId": new FormControl("", [Validators.required]),
-      "picture": new FormControl("", [Validators.required])
+      "picture": new FormControl("", [Validators.required,Validators.pattern(/\.(jpeg|jpg|gif|png)$/i)])
     })
   }
   get listComponentArray() {
@@ -43,6 +45,18 @@ export class AddRecipeComponent implements OnInit {
   }
   get preparationMethodArray() {
     return this.addRecipeForm.get('preparationMethod') as FormArray;
+  }
+  showAlert(): void {
+    Swal.fire({
+      title: 'התוסף בהצלחה!',
+      text: 'המתכון התוסף בהצלחה!',
+      icon: 'success',
+      confirmButtonText: 'אישור'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        console.log('המשתמש אישר את ההודעה.');
+      }
+    });
   }
   removeEmptyproducts() {
     for (let i = this.listComponentArray.length - 1; i >= 0; i--) {
@@ -84,6 +98,7 @@ export class AddRecipeComponent implements OnInit {
     this.recipeEdit.levelDifficulty=this.addRecipeForm.get('levelDifficulty').value;
     this.recipeEdit.userId=this.addRecipeForm.get('userId').value;
     this.recipeEdit.picture=this.addRecipeForm.get('picture').value;
+    this.recipeEdit.dateAdded=new Date();
     this.recipeEdit.listComponent = new Array;
     this.listComponentArray.controls.forEach(control => {
       this.recipeEdit.listComponent.push(control.value);
@@ -95,7 +110,7 @@ export class AddRecipeComponent implements OnInit {
     console.log(this.recipeEdit);
     console.log(this.recipeEdit.recipeName);
     if( this._recipesService.addRecipe(this.recipeEdit)){
-      alert("התוסף בהצלחה!!!")
+      this.showAlert();
       this.router.navigate(['/recipe/all-recipe'])
     }
     else alert("error")

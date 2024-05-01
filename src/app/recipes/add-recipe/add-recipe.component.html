@@ -20,6 +20,7 @@
     <input placeholder="רמת קושי" type="number" formControlName="levelDifficulty">
     <ng-container *ngIf="this.addRecipeForm.controls['levelDifficulty'].errors as levelDifficultyTimeError">
         <p *ngIf="levelDifficultyTimeError['required']">this field is must!</p>
+        <p *ngIf="levelDifficultyTimeError['min'] || levelDifficultyTimeError['max']">this field is must!</p>
     </ng-container>
     <br>
     <!-- <input placeholder="תאריך הוספה" type="date" formControlName="dateAdded">
@@ -52,6 +53,7 @@
     <input placeholder="כתובת תמונה" type="text" formControlName="picture">
     <ng-container *ngIf="this.addRecipeForm.controls['picture'].errors as pictureError">
         <p *ngIf="pictureError['required']">this field is must!</p>
+        <p *ngIf="pictureError['pattern']">Please provide a valid picture (jpeg, jpg, gif, png)!</p>
     </ng-container>
     <button (click)="add()" [disabled]="this.addRecipeForm.invalid">login</button>
 </form>
